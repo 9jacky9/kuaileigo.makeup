@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>家庭影院大屏无感分流：Apple TV搭配旁路网关与Infuse挂载全流程实操 - 快雷Go影音专版</title>
+  <meta name="description" content="详述家庭影院软路由旁路网关网络拓扑搭建、tvOS全局免打扰分流规则设计及Infuse挂载WebDAV流媒体缓存调优全流程。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 顶部状态遥测条 -->
+  <div class="cinema-topbar">
+    <div class="cinema-container cinema-topbar-flex">
+      <div class="cinema-stream-pill">
+        <span class="cinema-live-beacon"></span>
+        <span>快雷Go影音专版品牌矩阵 · 极速音画技术工程</span>
+      </div>
+      <div>
+        <a href="index.html" style="color: var(--cinema-rose);">返回影音版首页 &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 影音主导航栏 -->
+  <header class="cinema-header">
+    <div class="cinema-container cinema-nav-wrap">
+      <a href="index.html" class="cinema-logo" aria-label="快雷Go首页">
+        <svg class="cinema-logo-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="40" height="40" rx="10" fill="#18111b" stroke="#e11d48" stroke-width="1.8"/>
+          <path d="M24 10C24 10 27 15 25 18C23 21 21 22 21 25C21 28.5 23.5 31 27 31C29 31 31 30 32 28.5C31.5 32.5 28 35 24 35C19 35 15 31 15 25C15 18.5 20.5 14 24 10Z" fill="#ea580c"/>
+          <path d="M27 12L22 23H30L25 34L33 21H25L27 12Z" fill="#ffffff"/>
+        </svg>
+        <div class="cinema-logo-text">
+          <span class="cinema-logo-brand">快雷Go</span>
+          <span class="cinema-logo-sub">CINEMA REPORT</span>
+        </div>
+      </a>
+      
+      <!-- 纯CSS原生汉堡切换器 -->
+      <input type="checkbox" id="cinema-toggle" class="cinema-nav-toggle" aria-label="展开导航菜单">
+      <label for="cinema-toggle" class="cinema-hamburger" aria-label="切换主菜单">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
+      <nav class="cinema-nav-menu">
+        <a href="index.html" class="cinema-nav-link">影音首页</a>
+        <a href="index.html#advantages" class="cinema-nav-link">瞬开优势</a>
+        <a href="index.html#streaming-matrix" class="cinema-nav-link">超清与AI</a>
+        <a href="index.html#pricing" class="cinema-nav-link">臻享方案</a>
+        <a href="index.html#faq" class="cinema-nav-link">观影疑难</a>
+        <a href="cinema-feed.html" class="cinema-nav-link">视界内参</a>
+        <label for="cinema-toggle" class="cinema-menu-close-btn">✕ 收起导航菜单</label>
+      </nav>
+
+      <div class="cinema-nav-actions">
+        <a href="https://ww012.twilightaff.com/#/?code=A56DH1Af" target="_blank" rel="nofollow" class="btn-cinema btn-cinema-crimson">解锁臻彩专线</a>
+      </div>
+    </div>
+    <!-- 移动端专属横向滑动导航条：保证在手机视口下导航菜单始终醒目可见、永不缺失 -->
+    <nav class="cinema-mobile-subnav" aria-label="移动端影音快速导航">
+      <div class="cinema-container cinema-mobile-subnav-scroll">
+        <a href="index.html" class="cinema-subnav-pill">影音首页</a>
+        <a href="index.html#advantages" class="cinema-subnav-pill">瞬开优势</a>
+        <a href="index.html#pricing" class="cinema-subnav-pill">臻享方案</a>
+        <a href="index.html#faq" class="cinema-subnav-pill">观影疑难</a>
+        <a href="cinema-feed.html" class="cinema-subnav-pill">视界内参</a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="cinema-page-header">
+    <div class="cinema-container">
+      <h1 class="cinema-page-title">家庭影院大屏无感分流：Apple TV搭配旁路网关与Infuse挂载全流程实操</h1>
+      <div class="cinema-breadcrumb">
+        <a href="index.html">首页</a> &gt; <a href="cinema-feed.html">视界内参</a> &gt; 正文
+      </div>
+    </div>
+  </div>
+
+  <main class="cinema-page-content">
+    <div class="cinema-container">
+      <article class="cinema-article-box">
+        <div style="font-size: 0.875rem; color: var(--text-dim); margin-bottom: 24px;">
+          作者：何锦荣 · 智能家居与家庭影院网络极客 · 发布日期：2026-03-09 · 分类：家庭影院与软路由实操
+        </div>
+
+        <p>
+          在高端家庭影院的设备矩阵中，Apple TV 4K凭借其强悍的A15仿生芯片、原生色彩管理机制以及与各大海外视听App的无缝衔接，被公认为大屏观影体验的天花板。再配合被誉为“最强家庭影院神器”的Infuse Pro播放器，轻松即可将远程网盘或本地NAS中的原盘大片呈现于客厅。然而，Apple TV tvOS系统的封闭性决定了其无法像手机或PC那样随意安装复杂的网络调试客户端。如何构建优雅无感的家庭旁路网关分流系统，成为每个影音发烧友必须攻克的技术课题。
+        </p>
+
+        <h2>一、经典家庭局域网与旁路网关（旁路由）拓扑</h2>
+        <p>
+          在理想的家庭网络设计中，最稳健的方案是保留主路由器（如华硕、网件或企业级硬路由）专职负责拨号、NAT地址转换与全屋WiFi覆盖，同时在局域网内挂载一台双网口或单网口的x86轻量软路由（如N100或工控机）作为“旁路网关”。
+        </p>
+        <p>
+          这样设计有两大无可替代的优势：第一，即便旁路设备关机维护或系统重启，全屋智能家居、长辈手机与电视盒子的普通内网及国内公网访问丝毫不受影响；第二，只需在Apple TV的网络设置中将网关与DNS单独指向旁路网关IP，即可实现精准定向加速。
+        </p>
+
+        <h2>二、tvOS网络配置与防DNS污染分流策略</h2>
+        <p>
+          在Apple TV上手动设置IPv4地址，将网关（Router）与首选DNS修改为旁路网关的局域网静态IP。
+        </p>
+
+        <h3>1. 旁路网关的iptables与nftables转发规则</h3>
+        <p>
+          为了避免经典的ICMP重定向引发网络断流，软路由系统必须开启IP转发（<code>net.ipv4.ip_forward = 1</code>），并在防火墙中针对来自Apple TV静态IP的流量正确配置MASQUERADE伪装或严格TPROXY透明代理转发，确保数据包往返对称。
+        </p>
+
+        <h3>2. 影音专用域名规则分流与无感剔除</h3>
+        <p>
+          利用Clash或Sing-box内核的GEOIP与GEOSITE精细化规则集，将Netflix、Disney+、HBO Max、YouTube及Emby/WebDAV服务器域名精确导向专线住宅节点，而国内爱奇艺、腾讯视频及局域网广播流量全部DIRECT直连，实现全家完全无需手动切换节点的“全自动沉浸式观影”。
+        </p>
+
+        <h2>三、Infuse挂载远程WebDAV与4K原盘缓存调优</h2>
+        <p>
+          将远程网盘或私人海报墙挂载至Infuse时，跨洋长距离高码率原盘读取常常因TCP慢启动而卡顿。
+        </p>
+        <p>
+          在Infuse设置中，必须将“流媒体缓存”（Streaming Cache）调整为“最大”（Memory Max），允许Infuse在播放前预先在Apple TV充裕的运存中吞入数个G的视频分块。同时，远程挂载协议优先推荐开启HTTPS加密WebDAV，有效规避宽带运营商针对特定文件协议的QoS流量限速。
+        </p>
+        <p>
+          在日常构建旁路网关与家庭网络加速通道时，选择一个稳定可靠、长久运营且节点种类丰富的服务商是成功的一半。想要系统了解并选配适合大屏家庭影院加速的稳定网络方案，可查阅广受用户推崇的<a href="https://tizilab.net/" target="_blank">2026好用的梯子工具综合导航</a>，获取详尽的软硬件选型指南与新手避坑全书。
+        </p>
+
+        <h3>3. 音画无损直通输出设置</h3>
+        <p>
+          在Apple TV系统音频设置中将音频格式设定为“未压缩多声道LPCM”，由Apple TV直接解码杜比音轨并无损直通给后级AV功放，确保杜比全景声与5.1/7.1声道空间定位毫厘不爽。
+        </p>
+
+        <h3>4. 软硬件性能调优与大并发网络吞吐保障</h3>
+        <p>
+          确保旁路由网卡开启硬件校验和卸载（Checksum Offload）与网卡多队列（RSS），避免百兆原盘突发流量在单CPU核心上造成软中断（SoftIRQ）瓶颈，为家庭影院提供长期不宕机、无死角的超高速网络承载基座。
+        </p>
+
+        <h2>四、实操总结</h2>
+        <p>
+          旁路网关架构彻底解除了设备端的软件束缚。通过合理的拓扑规划、科学的分流配置与Infuse的高速挂载，即可让客厅大屏彻底告别卡顿与繁复操作，尽享世界顶级音画盛宴。
+        </p>
+
+      </article>
+    </div>
+  </main>
+
+  <footer class="cinema-footer">
+    <div class="cinema-container">
+      <ul class="cinema-footer-links">
+        <li><a href="sitemap.html" class="cinema-footer-link">网站地图</a></li>
+        <li><a href="about.html" class="cinema-footer-link">关于我们</a></li>
+        <li><a href="terms.html" class="cinema-footer-link">服务条款</a></li>
+        <li><a href="privacy.html" class="cinema-footer-link">隐私政策</a></li>
+      </ul>
+      <div class="cinema-copyright">
+        &copy; 2026 快雷Go (KuaiLeiGo.makeup) 保留所有权利
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
