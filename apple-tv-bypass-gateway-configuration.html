@@ -1,119 +1,96 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PS5、Switch 联网：路由器与加速服务的几种连接方式 - 快雷Go视界内参</title>
-  <meta name="description" content="游戏主机无法安装代理客户端，怎么让它们也用上加速服务？介绍路由器共享、电脑共享网络与专用设备三种连接方式及其利弊。">
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Apple TV配合Infuse读取个人媒体：共享地址、权限与网关路径怎么核对</title>
+<meta content="使用自有或获授权视频检查Infuse共享、WebDAV路径、读取权限和网络路径，按小样本验收后再建立媒体库。" name="description"/>
+<link href="style.css" rel="stylesheet"/>
 </head>
 <body>
-
-  <!-- 顶部状态遥测条 -->
-  <div class="cinema-topbar">
-    <div class="cinema-container cinema-topbar-flex">
-      <div class="cinema-stream-pill">
-        <span class="cinema-live-beacon"></span>
-        <span>快雷Go影音专版品牌矩阵 · 极速音画技术工程</span>
+<!-- 顶部状态遥测条 -->
+<div class="cinema-topbar">
+<div class="cinema-container cinema-topbar-flex">
+<div class="cinema-stream-pill">
+<span class="cinema-live-beacon"></span>
+<span>快雷Go影音专版品牌矩阵 · 极速音画技术工程</span>
+</div>
+<div>
+<a href="index.html" style="color: var(--cinema-rose);">返回影音版首页 →</a>
+</div>
+</div>
+</div>
+<!-- 影音主导航栏 -->
+<header class="cinema-header">
+<div class="cinema-container cinema-nav-wrap">
+<a aria-label="快雷Go首页" class="cinema-logo" href="index.html">
+<svg class="cinema-logo-svg" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#18111b" height="40" rx="10" stroke="#e11d48" stroke-width="1.8" width="40" x="4" y="4"></rect>
+<path d="M24 10C24 10 27 15 25 18C23 21 21 22 21 25C21 28.5 23.5 31 27 31C29 31 31 30 32 28.5C31.5 32.5 28 35 24 35C19 35 15 31 15 25C15 18.5 20.5 14 24 10Z" fill="#ea580c"></path>
+<path d="M27 12L22 23H30L25 34L33 21H25L27 12Z" fill="#ffffff"></path>
+</svg>
+<div class="cinema-logo-text">
+<span class="cinema-logo-brand">快雷Go</span>
+<span class="cinema-logo-sub">CINEMA REPORT</span>
+</div>
+</a>
+<!-- 纯CSS原生汉堡切换器 -->
+<input aria-label="展开导航菜单" class="cinema-nav-toggle" id="cinema-toggle" type="checkbox"/>
+<label aria-label="切换主菜单" class="cinema-hamburger" for="cinema-toggle">
+<span></span>
+<span></span>
+<span></span>
+</label>
+<nav class="cinema-nav-menu">
+<a class="cinema-nav-link" href="index.html">影音首页</a>
+<a class="cinema-nav-link" href="index.html#advantages">瞬开优势</a>
+<a class="cinema-nav-link" href="index.html#streaming-matrix">超清与AI</a>
+<a class="cinema-nav-link" href="index.html#pricing">臻享方案</a>
+<a class="cinema-nav-link" href="index.html#faq">观影疑难</a>
+<a class="cinema-nav-link" href="cinema-feed.html">视界内参</a>
+<label class="cinema-menu-close-btn" for="cinema-toggle">✕ 收起导航菜单</label>
+</nav>
+<div class="cinema-nav-actions">
+<a class="btn-cinema btn-cinema-crimson" href="https://ww012.twilightaff.com/#/?code=A56DH1Af" rel="nofollow" target="_blank">解锁臻彩专线</a>
+</div>
+</div>
+<!-- 移动端专属横向滑动导航条：保证在手机视口下导航菜单始终醒目可见、永不缺失 -->
+<nav aria-label="移动端影音快速导航" class="cinema-mobile-subnav">
+<div class="cinema-container cinema-mobile-subnav-scroll">
+<a class="cinema-subnav-pill" href="index.html">影音首页</a>
+<a class="cinema-subnav-pill" href="index.html#advantages">瞬开优势</a>
+<a class="cinema-subnav-pill" href="index.html#pricing">臻享方案</a>
+<a class="cinema-subnav-pill" href="index.html#faq">观影疑难</a>
+<a class="cinema-subnav-pill" href="cinema-feed.html">视界内参</a>
+</div>
+</nav>
+</header>
+<div class="cinema-page-header">
+<div class="cinema-container">
+<h1 class="cinema-page-title">Apple TV配合Infuse读取个人媒体：共享地址、权限与网关路径怎么核对</h1>
+<div class="cinema-breadcrumb">
+<a href="index.html">首页</a> &gt; <a href="cinema-feed.html">视界内参</a> &gt; 正文
       </div>
-      <div>
-        <a href="index.html" style="color: var(--cinema-rose);">返回影音版首页 &rarr;</a>
+</div>
+</div>
+<main class="cinema-page-content">
+<div class="cinema-container">
+<article class="cinema-article-box"><div data-swc-article-body="2026-11-16"><h2>先分开播放器、存储与网络三个角色</h2><p>Infuse负责读取与播放，NAS或获授权云端保存内容，家庭网关决定相关连接如何转发。任何一层出错都可能显示无法打开文件，但处理方法不同。开始配置之前先确认内容来源与使用权限，选一份自己的短视频作样本。不要直接导入庞大资料库后再排障，也不要把网络服务当成自动提供影片或账户权限的工具。</p><h2>第一步写清媒体所在位置</h2><p>记录是家中共享、远端服务器还是受支持云服务，确认服务地址、端口、路径与账户范围。网页分享链接未必就是播放器能使用的协议入口，WebDAV地址也可能包含专门路径。按存储提供方正式说明核对，不凭浏览器地址栏猜测。账号只授予完成读取所需的范围，避免给客厅播放设备保存不必要的管理员权限。</p><h2>第二步先验证存储端文件本身</h2><p>在已知正常的设备上打开短样本，确认格式、时长、音轨和内容完整。文件列表出现名称，不代表实际正文可读；下载到错误页面或权限提示时，应先修复存储端。若自己的源文件在本地都无法播放，继续换外部连接没有意义。保留原样本，不在测试期间不断转换编码，让每次对照有共同基础。</p><h2>按Infuse支持的共享方式添加</h2><p>Firecore文档说明Infuse支持多种共享协议与云服务。进入添加文件或共享的当前入口，选择与存储实际提供方式相符的类型，再填写地址、路径与凭据。不同系统和版本界面可能调整，应按对应说明操作。共享名称用于自己辨认，不能用它证明已经连接到正确服务器；添加后还要核对目录与样本内容。</p><h2>第三步逐项验证目录和读取权限</h2><p>先浏览测试目录，再打开一份小样本，确认账户能读取所需文件而没有不必要的写入权限。目录可见但文件失败，可能是路径、权限或服务响应不同，不应立即认定网关坏了。若只某类文件异常，记录格式与错误；若全部读取失败，再核对协议、认证和连接。一次只改一个字段，避免越改越难恢复。</p><h2>家庭共享先在局域网内完成验收</h2><p>家中NAS与Apple TV应先在正常家庭路径下验证。确认设备地址、接入与共享服务，不需要为本地播放绕到外部再回来。若局域网样本已经缓冲，检查无线、存储读取与设备能力。外部机场服务通常不能解决NAS磁盘忙或家庭无线覆盖不足，先把本地基础做稳，再考虑远端来源。</p><h2>第四步确认网关到底承载哪些连接</h2><p>使用旁路网关时，检查Apple TV实际网络信息与相关转发配置，记录默认路径和解析方式。能够打开网关管理页不代表播放请求已经经过它。不要为了一个样本同时修改全屋地址分配与DNS，先在明确的测试范围内验证。家庭投屏、打印和其他局域网功能也需保留，外部连接正常不意味着所有本地任务都合格。</p><h2>远端读取要区分列目录和持续传输</h2><p>目录和海报所需数据较少，能够显示封面不代表长视频持续供给足够。播放固定短片，观察开始、连续段和一次跳转的结果，再逐步增加样本大小。大文件读取还受存储服务限额、随机读取与播放器支持影响。不要只用一次网页测速推断全部媒体体验，记录具体失败阶段才有助于继续定位。</p><h2>为额外连接选择明确适配条件</h2><p>若确需获批准的外部接入，可参考<a href="https://dajichang.mom/">Apple TV网关机场配置比较</a>整理客户端、网关与流量条件。服务提供连接不等于提供存储授权，也不能让不支持的媒体格式自动兼容。选择前先验证实际设备和协议，不把套餐宣传中的影音字样当作Infuse所有共享方式都会正常的承诺。</p><h2>不要把共享凭据泄漏给排障资料</h2><p>求助截图遮住用户名、令牌、完整共享地址中的秘密参数及私人目录。向可信支持提供版本、协议、错误和样本特征即可先开始分析，不必发送完整媒体库。家庭设备退出使用或交给他人时，按应用与服务支持方式移除不再需要的授权。仅删除桌面图标并不一定撤销远端访问，凭据管理要单独确认。</p><h2>小样本通过后再整理媒体库</h2><p>给文件和目录采用稳定命名，确认读取范围后再逐步加入内容。海报匹配错误与网络失败是不同问题，不要为了修正名称删除原始文件。完成整理后抽查几份不同格式与大小的样本，保留仍不支持的项目清单。资料库数量增加不等于可用内容增加，真正验收仍是目标设备能够正确播放。</p><h2>留下可恢复的客厅使用说明</h2><p>记录共享类型、非敏感路径说明、已验证设备与故障检查顺序，凭据另行保管。系统或存储升级后复查短样本，避免一次变更影响全家观看时才发现。清楚划分播放器、存储与网关职责，可以让排障更少依赖猜测，也让家庭媒体使用保持在自己能够管理和恢复的范围内。</p></div></article>
+</div>
+</main>
+<footer class="cinema-footer">
+<div class="cinema-container">
+<ul class="cinema-footer-links">
+<li><a class="cinema-footer-link" href="sitemap.html">网站地图</a></li>
+<li><a class="cinema-footer-link" href="about.html">关于我们</a></li>
+<li><a class="cinema-footer-link" href="terms.html">服务条款</a></li>
+<li><a class="cinema-footer-link" href="privacy.html">隐私政策</a></li>
+</ul>
+<div class="cinema-copyright">
+        © 2026 快雷Go (KuaiLeiGo.makeup) 保留所有权利
       </div>
-    </div>
-  </div>
-
-  <!-- 影音主导航栏 -->
-  <header class="cinema-header">
-    <div class="cinema-container cinema-nav-wrap">
-      <a href="index.html" class="cinema-logo" aria-label="快雷Go首页">
-        <svg class="cinema-logo-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="4" width="40" height="40" rx="10" fill="#18111b" stroke="#e11d48" stroke-width="1.8"/>
-          <path d="M24 10C24 10 27 15 25 18C23 21 21 22 21 25C21 28.5 23.5 31 27 31C29 31 31 30 32 28.5C31.5 32.5 28 35 24 35C19 35 15 31 15 25C15 18.5 20.5 14 24 10Z" fill="#ea580c"/>
-          <path d="M27 12L22 23H30L25 34L33 21H25L27 12Z" fill="#ffffff"/>
-        </svg>
-        <div class="cinema-logo-text">
-          <span class="cinema-logo-brand">快雷Go</span>
-          <span class="cinema-logo-sub">CINEMA REPORT</span>
-        </div>
-      </a>
-      
-      <!-- 纯CSS原生汉堡切换器 -->
-      <input type="checkbox" id="cinema-toggle" class="cinema-nav-toggle" aria-label="展开导航菜单">
-      <label for="cinema-toggle" class="cinema-hamburger" aria-label="切换主菜单">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-
-      <nav class="cinema-nav-menu">
-        <a href="index.html" class="cinema-nav-link">影音首页</a>
-        <a href="index.html#advantages" class="cinema-nav-link">瞬开优势</a>
-        <a href="index.html#streaming-matrix" class="cinema-nav-link">超清与AI</a>
-        <a href="index.html#pricing" class="cinema-nav-link">臻享方案</a>
-        <a href="index.html#faq" class="cinema-nav-link">观影疑难</a>
-        <a href="cinema-feed.html" class="cinema-nav-link">视界内参</a>
-        <label for="cinema-toggle" class="cinema-menu-close-btn">✕ 收起导航菜单</label>
-      </nav>
-
-      <div class="cinema-nav-actions">
-        <a href="https://ww012.twilightaff.com/#/?code=A56DH1Af" target="_blank" rel="nofollow" class="btn-cinema btn-cinema-crimson">解锁臻彩专线</a>
-      </div>
-    </div>
-    <!-- 移动端专属横向滑动导航条：保证在手机视口下导航菜单始终醒目可见、永不缺失 -->
-    <nav class="cinema-mobile-subnav" aria-label="移动端影音快速导航">
-      <div class="cinema-container cinema-mobile-subnav-scroll">
-        <a href="index.html" class="cinema-subnav-pill">影音首页</a>
-        <a href="index.html#advantages" class="cinema-subnav-pill">瞬开优势</a>
-        <a href="index.html#pricing" class="cinema-subnav-pill">臻享方案</a>
-        <a href="index.html#faq" class="cinema-subnav-pill">观影疑难</a>
-        <a href="cinema-feed.html" class="cinema-subnav-pill">视界内参</a>
-      </div>
-    </nav>
-  </header>
-
-  <div class="cinema-page-header">
-    <div class="cinema-container">
-      <h1 class="cinema-page-title">PS5、Switch 联网：路由器与加速服务的几种连接方式</h1>
-      <div class="cinema-breadcrumb">
-        <a href="index.html">首页</a> &gt; <a href="cinema-feed.html">视界内参</a> &gt; 正文
-      </div>
-    </div>
-  </div>
-
-  <main class="cinema-page-content">
-    <div class="cinema-container">
-      <article class="cinema-article-box">
- <div style="font-size: 0.875rem; color: var(--text-dim); margin-bottom: 24px;">
- 作者：快雷Go使用手记 · 发布日期：2026-11-14 · 分类：游戏主机
- </div>
-<p>PS5、Switch 等主机没有地方安装客户端，想用加速服务，只能“借道”。下面三种常见方式。</p>
-<h2>一、通过路由器</h2>
-<p>在支持的路由器上直接设置，全家设备都能用。优点是一劳永逸；缺点是配置复杂、路由器性能有限时会拖慢网络。</p>
-<h2>二、电脑共享网络</h2>
-<p>让电脑先使用加速服务，再通过网线或热点共享给主机。设置较简单，但电脑需要一直开着，延迟也会略增。</p>
-<h2>三、专用的小设备</h2>
-<p>使用小型网关设备承担代理工作，主机只需把网关指向它。灵活性高，适合愿意折腾的玩家。</p>
-<h2>四、要注意的几点</h2>
-<ul><li>联机游戏对延迟和丢包敏感，务必先小范围测试。</li><li>确认转发了 UDP 流量。</li><li>留一个不走代理的备用方案，出问题时能立刻回到原状态。</li></ul>
-<h2>五、该选哪种</h2>
-<p>只想偶尔用：电脑共享最简单；想长期稳定：路由器或专用设备更合适。</p>
- </article>
-    </div>
-  </main>
-
-  <footer class="cinema-footer">
-    <div class="cinema-container">
-      <ul class="cinema-footer-links">
-        <li><a href="sitemap.html" class="cinema-footer-link">网站地图</a></li>
-        <li><a href="about.html" class="cinema-footer-link">关于我们</a></li>
-        <li><a href="terms.html" class="cinema-footer-link">服务条款</a></li>
-        <li><a href="privacy.html" class="cinema-footer-link">隐私政策</a></li>
-      </ul>
-      <div class="cinema-copyright">
-        &copy; 2026 快雷Go (KuaiLeiGo.makeup) 保留所有权利
-      </div>
-    </div>
-  </footer>
-
+</div>
+</footer>
 </body>
 </html>
